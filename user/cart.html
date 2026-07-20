@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - MR. VIKING</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .page-header {
+            padding: 150px 0 60px;
+            background: var(--color-bg-secondary);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-family: var(--font-display);
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .cart-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 40px;
+            padding: 80px 0;
+        }
+
+        .cart-items {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto auto;
+            gap: 20px;
+            padding: 25px;
+            border-bottom: 1px solid var(--color-border);
+            align-items: center;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .item-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .item-info p {
+            color: var(--color-text-tertiary);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 15px;
+            border-radius: 40px;
+        }
+
+        .qty-btn {
+            font-size: 20px;
+            color: var(--color-text-tertiary);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .qty-btn:hover {
+            color: var(--color-white);
+        }
+
+        .qty-val {
+            font-weight: 700;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .item-price {
+            font-weight: 800;
+            font-size: 18px;
+            min-width: 120px;
+            text-align: right;
+        }
+
+        .btn-remove-item {
+            color: var(--color-text-tertiary);
+            margin-left: 20px;
+            transition: color 0.3s;
+        }
+
+        .btn-remove-item:hover {
+            color: var(--color-accent);
+        }
+
+        /* Summary Card */
+        .cart-summary {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 30px;
+            height: fit-content;
+        }
+
+        .summary-title {
+            font-size: 20px;
+            font-family: var(--font-display);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .summary-row.total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--color-border);
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .summary-row.total .price-val {
+            color: var(--color-accent);
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 18px;
+            background: var(--color-accent);
+            color: var(--color-white);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            margin-top: 30px;
+            transition: transform 0.3s;
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-3px);
+            background: var(--color-accent-hover);
+        }
+
+        .btn-clear {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--color-text-tertiary);
+            text-decoration: underline;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 100px 0;
+            grid-column: 1 / -1;
+            display: none;
+        }
+
+        @media (max-width: 992px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="cart-page">
+        <div class="cursor" id="cursor"></div>
+        <div class="cursor-follower" id="cursorFollower"></div>
+
+        <!-- Header / Navigation -->
+        <header class="header" id="header" style="background: rgba(10,10,10,0.95);">
+            <div class="header-inner">
+                <a href="../index.php" class="logo" id="logo">
+                    <span class="logo-text">MR. VIKING</span>
+                </a>
+                <nav class="main-nav" id="mainNav">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="motorcycles.html" class="nav-link"
+                                data-text="Motorcycles">Motorcycles</a></li>
+                        <li class="nav-item"><a href="../index.php#motorcycles" class="nav-link"
+                                data-text="The Range">The Range</a></li>
+                        <li class="nav-item"><a href="about-us.html" class="nav-link" data-text="About Us">About Us</a>
+                        </li>
+                        <li class="nav-item"><a href="#" class="nav-link" data-text="News">News</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="search-header-btn" id="searchHeaderBtn" aria-label="Search">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <span class="search-btn-text">Search</span>
+                    </button>
+                    <a href="compare.html" class="feature-btn" id="compareBtn" aria-label="Compare">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+                        </svg>
+                        <span class="badge" id="compareBadge">0</span>
+                    </a>
+                    <a href="wishlist.html" class="feature-btn" id="wishlistHeaderBtn" aria-label="Wishlist">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                            </path>
+                        </svg>
+                        <span class="badge" id="wishlistBadge">0</span>
+                    </a>
+                    <a href="cart.html" class="feature-btn active" id="cartHeaderBtn" aria-label="Shopping Cart">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                            <path d="M3 6h18"></path>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        <span class="badge" id="cartBadge">0</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hidden stub so Auth.init() works on cart page (no userStatus/loginBtn needed) -->
+            <div id="userStatus" style="display:none"></div>
+            <button id="loginBtn" style="display:none" aria-hidden="true"></button>
+        </header>
+
+        <!-- Auth Modal (same as index.html) -->
+        <div class="auth-modal" id="authModal">
+            <div class="auth-modal-backdrop" id="authClose"></div>
+            <div class="auth-container">
+                <button class="auth-close-btn" id="authCloseBtn">&times;</button>
+                <div id="loginMsg"
+                    style="display:none; padding:10px; margin-bottom:15px; border-radius:4px; text-align:center; font-weight:bold; font-size: 0.9rem;">
+                </div>
+
+                <!-- Checkout hint banner -->
+                <div id="cartAuthBanner"
+                    style="background:rgba(192,0,0,0.1); border:1px solid rgba(192,0,0,0.3); border-radius:8px; padding:10px 14px; margin-bottom:20px; font-size:0.82rem; color:#ddd; display:flex; align-items:center; gap:10px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c00000" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    <span><strong>Access Required</strong> &mdash; Please sign in or create an account to complete your
+                        purchase.</span>
+                </div>
+
+                <!-- Login View -->
+                <div class="auth-view" id="loginView">
+                    <h2 class="auth-title">Welcome <em>Back</em></h2>
+                    <p class="auth-subtitle">Login to your MR. VIKING account</p>
+
+                    <form class="auth-form" id="loginForm">
+                        <div class="form-group-auth">
+                            <label for="loginId">Email or Mobile Number</label>
+                            <input type="text" id="loginId" placeholder="Enter your ID" required
+                                oninput="Auth.validateLoginEmail(this)">
+                            <div id="loginIdError"
+                                style="display:none; color:#ff4d4d; font-size:0.75rem; margin-top:5px;">Please enter a
+                                valid email or mobile number</div>
+                        </div>
+                        <div class="form-group-auth">
+                            <label for="loginPass">Password</label>
+                            <div class="pw-wrap">
+                                <input type="password" id="loginPass" placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢" required>
+                                <button type="button" class="pw-eye-btn" onclick="togglePw('loginPass',this)"
+                                    aria-label="Toggle password">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <span>Login</span>
+                        </button>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+                            <div id="loginMsgBox"
+                                style="display:none; color:#ff4d4d; font-size:0.8rem; font-weight:500;"></div>
+                            <a href="#" id="forgotPasswordLink"
+                                style="color:var(--color-accent); font-size:0.85rem;">Forgot Password?</a>
+                        </div>
+                    </form>
+
+                    <div class="auth-divider"><span>OR</span></div>
+
+                    <div class="social-auth">
+                        <button class="social-btn google" id="googleAuthBtn">
+                            <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
+                            <span>Continue with Google</span>
+                        </button>
+                        <button class="social-btn facebook" id="facebookAuthBtn">
+                            <img src="../images/fb_icon.png" alt="Facebook">
+                            <span>Continue with Facebook</span>
+                        </button>
+                    </div>
+
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#" id="toSignup">Sign Up</a></p>
+                    </div>
+                </div>
+
+                <!-- Signup View -->
+                <div class="auth-view" id="signupView" style="display: none;">
+                    <h2 class="auth-title">Create <em>Account</em></h2>
+                    <p class="auth-subtitle">Join the world of Italian excellence</p>
+
+                    <form class="auth-form" id="signupForm">
+                        <div class="form-row">
+                            <div class="form-group-auth">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" placeholder="First Name" required>
+                            </div>
+                            <div class="form-group-auth">
+                                <label for="middleName">Middle Name</label>
+                                <input type="text" id="middleName" placeholder="Middle Name">
+                            </div>
+                        </div>
+                        <div class="form-group-auth">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" placeholder="Last Name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group-auth">
+                                <label for="birthDate">Birth Date</label>
+                                <input type="date" id="birthDate" required>
+                            </div>
+                            <div class="form-group-auth">
+                                <label for="gender">Gender</label>
+                                <select id="gender" required>
+                                    <option value="" disabled selected>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group-auth">
+                            <label for="signupContact" id="contactLabel">Email Address</label>
+                            <input type="text" id="signupContact" placeholder="email@example.com" required
+                                oninput="Auth.validateSignupEmail(this)">
+                            <div id="signupContactError"
+                                style="display:none; color:#ff4d4d; font-size:0.75rem; margin-top:5px;">Please enter a
+                                valid email or mobile number</div>
+                            <button type="button" class="toggle-contact-btn" id="toggleContact">Mobile Number, username
+                                or email</button>
+                        </div>
+                        <div class="form-group-auth">
+                            <label for="signupPass">Password</label>
+                            <div class="pw-wrap">
+                                <input type="password" id="signupPass" placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢" required>
+                                <button type="button" class="pw-eye-btn" onclick="togglePw('signupPass',this)"
+                                    aria-label="Toggle password">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <span>Sign Up</span>
+                        </button>
+                        <div style="display:flex; justify-content:center; align-items:center; margin-top:12px;">
+                            <div id="signupMsgBox"
+                                style="display:none; color:#ff4d4d; font-size:0.8rem; font-weight:500;"></div>
+                        </div>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#" id="toLogin">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <div class="page-header">
+                <div class="section-container">
+                    <h1 class="page-title">Shopping <em>Cart</em></h1>
+                    <p>Ready to bring art to your garage?</p>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <div class="cart-container" id="cartWrapper">
+                    <div class="cart-items" id="cartItemsContainer">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <div class="cart-summary">
+                        <h2 class="summary-title">Order Summary</h2>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotalVal">৳0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>VAT (15%)</span>
+                            <span class="price-val" id="vatVal">৳0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span style="color: #27ae60;">FREE</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span class="price-val" id="totalVal">৳0</span>
+                        </div>
+                        <button class="btn-checkout" onclick="openCheckoutModal()">Proceed to Checkout</button>
+                        <button class="btn-clear" onclick="FeatureManager.clearCart()">Clear Cart</button>
+                    </div>
+
+                    <div class="empty-cart" id="emptyCart">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                            <path d="M3 6h18"></path>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        <h3>Your cart is empty</h3>
+                        <p>Add some Italian excellence to your list.</p>
+                        <a href="motorcycles.html" class="btn-browse">Explore Range</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Checkout Modal -->
+        <div id="checkoutModal"
+            style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
+            <div style="background:#111; border:1px solid #c00000; width:450px; padding:30px; border-radius:12px;">
+                <h3 style="margin-bottom:20px; font-size:1.5rem; text-transform:uppercase;">Complete Order</h3>
+                <div id="checkoutForm">
+                    <input type="text" id="chkName" placeholder="Full Customer Name"
+                        style="width:100%; padding:15px; margin-bottom:15px; background:#222; border:1px solid #333; color:#fff; border-radius:4px; box-sizing:border-box;">
+                    <input type="text" id="chkPhone" placeholder="Phone (+880)"
+                        style="width:100%; padding:15px; margin-bottom:15px; background:#222; border:1px solid #333; color:#fff; border-radius:4px; box-sizing:border-box;">
+                    <textarea id="chkAddress" placeholder="Full Delivery Address"
+                        style="width:100%; padding:15px; margin-bottom:25px; background:#222; border:1px solid #333; color:#fff; border-radius:4px; box-sizing:border-box; height:100px;"></textarea>
+                    <div style="display:flex; gap:10px;">
+                        <button onclick="processCheckout()"
+                            style="flex:1; padding:15px; background:#c00000; color:white; border:none; font-weight:bold; cursor:pointer; border-radius:4px;">CONFIRM
+                            PURCHASE</button>
+                        <button onclick="document.getElementById('checkoutModal').style.display='none'"
+                            style="flex:1; padding:15px; background:transparent; border:1px solid #333; color:white; font-weight:bold; cursor:pointer; border-radius:4px;">CANCEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script src="../js/bikes.js"></script>
+        <script src="../js/features.js"></script>
+        <script src="../js/script.js"></script>
+        <script>
+            // Helper to parse priceBDT strings (e.g., "9,500,000") to integer
+            function parsePrice(priceStr) {
+                if (!priceStr) return 0;
+                return parseInt(priceStr.replace(/,/g, ''), 10);
+            }
+
+            function renderCart() {
+                const container = document.getElementById('cartItemsContainer');
+                const emptyState = document.getElementById('emptyCart');
+                const cartItems = FeatureManager.cart;
+                const cartWrapper = document.getElementById('cartWrapper');
+
+                if (cartItems.length === 0) {
+                    container.parentElement.style.display = 'none';
+                    document.querySelector('.cart-summary').style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                container.parentElement.style.display = 'block';
+                document.querySelector('.cart-summary').style.display = 'block';
+                emptyState.style.display = 'none';
+
+                let subtotal = 0;
+
+                container.innerHTML = cartItems.map(item => {
+                    const bike = bikeData[item.id];
+                    if (!bike) return '';
+                    const price = parsePrice(bike.priceBDT);
+                    const itemTotal = price * item.quantity;
+                    subtotal += itemTotal;
+
+                    return `
+                    <div class="cart-item">
+                        <img src="${bike.thumbnail}" alt="${bike.name}">
+                        <div class="item-info">
+                            <p>${bike.family}</p>
+                            <h3>${bike.name}</h3>
+                        </div>
+                        <div class="quantity-control">
+                            <span class="qty-btn" onclick="FeatureManager.updateCartQuantity('${item.id}', ${item.quantity - 1})">−</span>
+                            <span class="qty-val">${item.quantity}</span>
+                            <span class="qty-btn" onclick="FeatureManager.updateCartQuantity('${item.id}', ${item.quantity + 1})">+</span>
+                        </div>
+                        <div class="item-price">৳ ${itemTotal.toLocaleString('en-IN')}</div>
+                        <button class="btn-remove-item" onclick="FeatureManager.removeFromCart('${item.id}')" title="Remove Item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                }).join('');
+
+                const vat = subtotal * 0.15; // 15% VAT
+                const total = subtotal + vat;
+
+                document.getElementById('subtotalVal').textContent = `৳ ${subtotal.toLocaleString('en-IN')}`;
+                document.getElementById('vatVal').textContent = `৳ ${vat.toLocaleString('en-IN')}`;
+                document.getElementById('totalVal').textContent = `৳ ${total.toLocaleString('en-IN')}`;
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                renderCart();
+            });
+            document.addEventListener('productsLoaded', () => {
+                renderCart();
+            });
+
+            async function openCheckoutModal() {
+                try {
+                    // Check if user is logged in
+                    const res = await fetch('../includes/auth_handler.php?check=1');
+                    const data = await res.json();
+
+                    if (!data.loggedIn) {
+                        // Open the existing MR. VIKING auth modal (same as index.html)
+                        Auth.open();
+                        return;
+                    }
+
+                    // Prefill details if user is logged in
+                    document.getElementById('chkName').value = data.user.first_name + ' ' + data.user.last_name;
+                    document.getElementById('chkPhone').value = data.user.contact || '';
+
+                    document.getElementById('checkoutModal').style.display = 'flex';
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
+            // After login/signup via the auth modal, auto-open checkout
+            document.addEventListener('DOMContentLoaded', () => {
+                const origLogin = HTMLFormElement.prototype.addEventListener;
+                // Hook: re-attempt checkout after successful login on this page
+                const loginForm = document.getElementById('loginForm');
+                const signupForm = document.getElementById('signupForm');
+                [loginForm, signupForm].forEach(form => {
+                    if (!form) return;
+                    form.addEventListener('submit', () => {
+                        // After Auth.handleLogin/Signup resolves, recheck and open checkout
+                        setTimeout(() => {
+                            const modal = document.getElementById('authModal');
+                            if (!modal || !modal.classList.contains('active')) {
+                                openCheckoutModal();
+                            }
+                        }, 1200);
+                    });
+                });
+            });
+
+            async function processCheckout() {
+                const name = document.getElementById('chkName').value;
+                const phone = document.getElementById('chkPhone').value;
+                const address = document.getElementById('chkAddress').value;
+
+                if (!name || !phone || !address) {
+                    alert("Please fill all details to confirm your order.");
+                    return;
+                }
+
+                // Calculate total price accurately based on cart
+                let subtotal = 0;
+                const items = FeatureManager.cart.map(item => {
+                    const bike = bikeData[item.id];
+                    const price = parsePrice(bike.priceBDT);
+                    subtotal += (price * item.quantity);
+                    return { id: item.id, quantity: item.quantity };
+                });
+                const total = subtotal + (subtotal * 0.15); // Add VAT
+
+                try {
+                    const payload = {
+                        action: 'placeOrder',
+                        customer_name: name,
+                        phone: phone,
+                        address: address,
+                        total_price: total,
+                        items: items
+                    };
+
+                    const res = await fetch('../includes/api.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        alert("Order Confirmed! Your Order ID is #" + data.order_id);
+                        document.getElementById('checkoutModal').style.display = 'none';
+                        FeatureManager.clearCart();
+                    } else {
+                        alert("Failed to place order: " + data.message);
+                    }
+                } catch (e) {
+                    console.error(e);
+                    alert("Network error processing order.");
+                }
+            }
+        </script>
+        <!-- Search Overlay -->
+        <div class="search-overlay" id="searchOverlay">
+            <div class="search-overlay-close" id="searchClose">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+            </div>
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search by bike name..."
+                        autocomplete="off">
+                    <div class="search-input-line"></div>
+                </div>
+                <div class="search-suggestions" id="searchSuggestions">
+                    <!-- Suggestions injected here -->
+                </div>
+            </div>
+        </div>
+        <script src="../js/cursor.js"></script>
+    </body>
+
+</html>

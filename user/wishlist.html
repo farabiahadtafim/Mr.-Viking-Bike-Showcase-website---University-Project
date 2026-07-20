@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - MR. VIKING</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .page-header {
+            padding: 150px 0 60px;
+            background: var(--color-bg-secondary);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-family: var(--font-display);
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .wishlist-grid {
+            padding: 80px 0;
+            min-height: 400px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 100px 0;
+            display: none;
+        }
+
+        .empty-state svg {
+            color: var(--color-text-tertiary);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: var(--font-size-2xl);
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            color: var(--color-text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .btn-browse {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--color-accent);
+            color: var(--color-white);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border-radius: 4px;
+        }
+
+        /* Wishlist Item Card Override */
+        .wishlist-item {
+            display: grid;
+            grid-template-columns: 200px 1fr auto;
+            gap: 30px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            align-items: center;
+            transition: all var(--transition-base);
+        }
+
+        .wishlist-item:hover {
+            border-color: var(--color-accent);
+            transform: scale(1.01);
+        }
+
+        .wishlist-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .item-details h3 {
+            font-size: var(--font-size-2xl);
+            margin-bottom: 5px;
+        }
+
+        .item-details p {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .item-specs {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .item-spec {
+            font-size: 12px;
+            color: var(--color-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .item-spec span {
+            color: var(--color-white);
+            font-weight: 700;
+        }
+
+        .wishlist-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action-small {
+            padding: 10px 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .btn-remove {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-tertiary);
+        }
+
+        .btn-remove:hover {
+            background: var(--color-accent);
+            color: var(--color-white);
+            border-color: var(--color-accent);
+        }
+
+        .btn-cart-add {
+            background: var(--color-white);
+            color: var(--color-black);
+        }
+
+        .btn-cart-add:hover {
+            background: var(--color-accent);
+            color: var(--color-white);
+        }
+    </style>
+</head>
+
+<body class="wishlist-page">
+
+    <!-- Header / Navigation -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="../index.php" class="logo" id="logo">
+                <span class="logo-text">MR. VIKING</span>
+            </a>
+            <nav class="main-nav" id="mainNav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="motorcycles.html" class="nav-link"
+                            data-text="Motorcycles">Motorcycles</a></li>
+                    <li class="nav-item"><a href="../index.php#motorcycles" class="nav-link" data-text="The Range">The
+                            Range</a></li>
+                    <li class="nav-item"><a href="about-us.html" class="nav-link" data-text="About Us">About Us</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" data-text="News">News</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-header-btn" id="searchHeaderBtn" aria-label="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <span class="search-btn-text">Search</span>
+                </button>
+                <a href="compare.html" class="feature-btn" id="compareBtn" aria-label="Compare">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+                    </svg>
+                    <span class="badge" id="compareBadge">0</span>
+                </a>
+                <a href="wishlist.html" class="feature-btn active" id="wishlistHeaderBtn" aria-label="Wishlist">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="badge" id="wishlistBadge">0</span>
+                </a>
+                <a href="cart.html" class="feature-btn" id="cartHeaderBtn" aria-label="Shopping Cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                        <path d="M3 6h18"></path>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="badge" id="cartBadge">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <div class="section-container">
+                <h1 class="page-title">My <em>Wishlist</em></h1>
+                <p>Your curated selection of Italian motorcycle art.</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="wishlist-grid" id="wishlistContainer">
+                <!-- Items populated by JS -->
+            </div>
+
+            <div class="empty-state" id="emptyWishlist">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <path
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                    </path>
+                </svg>
+                <h3>Your wishlist is empty</h3>
+                <p>Explore our range and save your favorite models.</p>
+                <a href="motorcycles.html" class="btn-browse">Browse Motorcycles</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <!-- Simplified Footer -->
+        <div class="footer-bottom">
+            <div class="section-container">
+                <div class="footer-bottom-inner"
+                    style="display: flex; justify-content: space-between; padding: 40px 0; border-top: 1px solid var(--color-border);">
+                    <p>&copy; 2024 MR. VIKING Motor S.p.A.</p>
+                    <a href="../index.php" style="letter-spacing: 5px; font-weight: 800;">MR. VIKING</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/bikes.js?v=2"></script>
+    <script src="../js/features.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        function renderWishlist() {
+            const container = document.getElementById('wishlistContainer');
+            const emptyState = document.getElementById('emptyWishlist');
+            const wishlist = FeatureManager.wishlist;
+
+            if (wishlist.length === 0) {
+                container.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            container.innerHTML = wishlist.map(id => {
+                const bike = bikeData[id];
+                if (!bike) return '';
+                return `
+                    <div class="wishlist-item reveal">
+                        <img src="${bike.thumbnail}" alt="${bike.name}">
+                        <div class="item-details">
+                            <p class="item-family">${bike.family}</p>
+                            <h3>${bike.name}</h3>
+                            <div class="item-specs">
+                                <div class="item-spec"><span>${bike.stats.cylinders}</span> Cyl</div>
+                                <div class="item-spec"><span>${bike.stats.capacity}</span> CC</div>
+                                <div class="item-spec"><span>${bike.stats.hp}</span> HP</div>
+                            </div>
+                        </div>
+                        <div class="wishlist-actions">
+                            <button class="btn-action-small btn-remove" onclick="FeatureManager.toggleWishlist('${id}')">Remove</button>
+                            <button class="btn-action-small btn-cart-add" onclick="FeatureManager.moveToCart('${id}')">Move to Cart</button>
+                            <button class="btn-action-small btn-cart-add" style="background: var(--color-accent); color: white; border: none;" onclick="FeatureManager.addToCompare('${id}')">Compare</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWishlist();
+        });
+        document.addEventListener('productsLoaded', () => {
+            renderWishlist();
+        });
+    </script>
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-overlay-close" id="searchClose">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+        </div>
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search by bike name..."
+                    autocomplete="off">
+                <div class="search-input-line"></div>
+            </div>
+            <div class="search-suggestions" id="searchSuggestions">
+                <!-- Suggestions injected here -->
+            </div>
+        </div>
+    </div>
+    <script src="../js/cursor.js"></script>
+</body>
+
+</html>

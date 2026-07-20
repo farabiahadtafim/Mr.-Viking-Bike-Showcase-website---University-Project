@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Motorcycles - MR. VIKING</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .page-header {
+            padding: 150px 0 60px;
+            background: var(--color-bg-secondary);
+            text-align: center;
+        }
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-family: var(--font-display);
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .compare-container {
+            padding: 80px 1.5vw;
+            overflow-x: auto;
+        }
+        .compare-table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+        }
+        .compare-row-image td {
+            text-align: center;
+            padding-bottom: 40px;
+        }
+        .compare-row-image img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 12px;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));
+            transition: transform 0.3s;
+        }
+        .compare-row-image img:hover {
+            transform: translateY(-10px);
+        }
+        .compare-label {
+            width: 200px;
+            font-size: 14px;
+            color: var(--color-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .compare-val {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .compare-val.highlight {
+            color: var(--color-accent);
+        }
+        .bike-name {
+            font-size: 24px;
+            font-family: var(--font-display);
+            margin-bottom: 5px;
+        }
+        .bike-family {
+            font-size: 12px;
+            color: var(--color-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .btn-remove-compare {
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--color-text-tertiary);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .btn-remove-compare:hover {
+            color: var(--color-accent);
+        }
+
+        .empty-compare {
+            text-align: center;
+            padding: 100px 0;
+            display: none;
+        }
+        
+        /* Diff highlighting logic */
+        .diff-different {
+            border-left: 2px solid var(--color-accent);
+        }
+    </style>
+</head>
+<body class="compare-page">
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Header / Navigation -->
+    <header class="header" id="header" style="background: rgba(10,10,10,0.95);">
+        <div class="header-inner">
+            <!-- Simplified Header -->
+            <a href="../index.php" class="logo" id="logo">
+                <span class="logo-text">MR. VIKING</span>
+            </a>
+            <div class="header-actions">
+                <button class="search-header-btn" id="searchHeaderBtn" aria-label="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <span class="search-btn-text">Search</span>
+                </button>
+                <a href="compare.html" class="feature-btn active" id="compareBtn" aria-label="Compare">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+                    </svg>
+                    <span class="badge" id="compareBadge">0</span>
+                </a>
+                <a href="wishlist.html" class="feature-btn" id="wishlistHeaderBtn" aria-label="Wishlist">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span class="badge" id="wishlistBadge">0</span>
+                </a>
+                <a href="cart.html" class="feature-btn" id="cartHeaderBtn" aria-label="Shopping Cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                        <path d="M3 6h18"></path>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="badge" id="cartBadge">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <div class="section-container">
+                <h1 class="page-title">Bike <em>Comparison</em></h1>
+                <p>Compare specs and find your perfect Italian match.</p>
+            </div>
+        </div>
+
+        <div class="compare-container">
+            <table class="compare-table" id="compareTable">
+                <!-- Populated by JS -->
+            </table>
+
+            <div class="empty-compare" id="emptyCompare">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+                </svg>
+                <h3>Add bikes to compare</h3>
+                <p>You can add up to 3 bikes to see a side-by-side comparison.</p>
+                <a href="motorcycles.html" class="btn-browse" style="display: inline-block; padding: 15px 40px; background: var(--color-accent); color: white; border-radius: 4px; text-transform: uppercase; font-weight: 700; margin-top: 20px;">Browse Range</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/bikes.js"></script>
+    <script src="../js/features.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        function renderComparison() {
+            const table = document.getElementById('compareTable');
+            const emptyState = document.getElementById('emptyCompare');
+            const compareIds = FeatureManager.compare;
+
+            if (compareIds.length === 0) {
+                table.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            table.style.display = 'table';
+            emptyState.style.display = 'none';
+
+            const bikes = compareIds.map(id => bikeData[id]).filter(b => b);
+
+            let html = '';
+
+            // Image Row
+            html += `<tr class="compare-row-image"><td></td>`;
+            bikes.forEach(bike => {
+                html += `
+                    <td>
+                        <img src="${bike.thumbnail}" alt="${bike.name}">
+                        <p class="bike-family">${bike.family}</p>
+                        <h3 class="bike-name">${bike.name}</h3>
+                        <div class="btn-remove-compare" onclick="FeatureManager.removeFromCompare('${bike.id}')">Remove</div>
+                    </td>
+                `;
+            });
+            html += `</tr>`;
+
+            // Specs Rows
+            const specs = [
+                { label: 'Brand', key: 'brand', isProp: true },
+                { label: 'Price (BDT)', key: 'price', isPrice: true },
+                { label: 'Cylinders', key: 'cylinders' },
+                { label: 'Capacity (CC)', key: 'capacity' },
+                { label: 'Horsepower (HP)', key: 'hp' },
+                { label: 'Top Speed (km/h)', key: 'topSpeed' },
+                { label: 'Weight (kg)', key: 'weight' }
+            ];
+
+            specs.forEach(spec => {
+                html += `<tr><td class="compare-label">${spec.label}</td>`;
+                
+                const values = bikes.map(b => {
+                    if (spec.isProp) return b[spec.key] || '-';
+                    if (spec.isPrice) return b.priceBDT ? '৳ ' + b.priceBDT : '-';
+                    return b.stats[spec.key] || '-';
+                });
+                
+                const isDifferent = new Set(values).size > 1;
+
+                values.forEach(val => {
+                    html += `<td class="compare-val ${isDifferent ? 'highlight' : ''}">${val}</td>`;
+                });
+                html += `</tr>`;
+            });
+
+            // Action Row
+            html += `<tr><td></td>`;
+            bikes.forEach(bike => {
+                html += `
+                    <td style="text-align: center; padding-top: 30px;">
+                        <button class="btn-action-small btn-cart-add" onclick="FeatureManager.addToCart('${bike.id}')" style="width: 80%; padding: 15px; background: var(--color-accent); color: white; border: none; border-radius: 4px; font-weight: 700; text-transform: uppercase; cursor: pointer;">Add to Cart</button>
+                    </td>
+                `;
+            });
+            html += `</tr>`;
+
+            table.innerHTML = html;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderComparison();
+        });
+    </script>
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-overlay-close" id="searchClose">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </div>
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search by bike name..." autocomplete="off">
+                <div class="search-input-line"></div>
+            </div>
+            <div class="search-suggestions" id="searchSuggestions">
+                <!-- Suggestions injected here -->
+            </div>
+        </div>
+    </div>
+    <script src="../js/cursor.js"></script>
+</body>
+</html>

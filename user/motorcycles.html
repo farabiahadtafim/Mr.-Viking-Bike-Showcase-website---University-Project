@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the MR. VIKING and Honda motorcycle range. Premium performance and design.">
+    <title>Motorcycles Range | MR. VIKING</title>
+    
+    <!-- Base Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/png" href="../images/Mr. Viking.png">
+    <style>
+        /* Specific page overrides if needed */
+        .range-nav { margin-bottom: 20px; }
+        .motorcycles-page { background: var(--color-bg-primary); }
+    </style>
+</head>
+<body class="motorcycles-page">
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="../index.php" class="logo"><img src="../images/Mr. Viking.png" alt="MR. VIKING Logo" class="logo-img"><span class="logo-text" style="margin-left:10px;">MR. VIKING</span></a>
+            
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="motorcycles.html" class="nav-link active">Motorcycles</a></li>
+                    <li class="nav-item"><a href="about-us.html" class="nav-link">About Us</a></li>
+                    <li class="nav-item"><a href="community.html" class="nav-link">Community</a></li>
+                    <li class="nav-item"><a href="product.html" class="nav-link">Models</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="search-header-btn" id="searchHeaderBtn" aria-label="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <span class="search-btn-text">Search</span>
+                </button>
+                <a href="compare.html" class="feature-btn" id="compareBtn" aria-label="Compare">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+                    </svg>
+                    <span class="badge" id="compareBadge">0</span>
+                </a>
+                <a href="wishlist.html" class="feature-btn" id="wishlistHeaderBtn" aria-label="Wishlist">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span class="badge" id="wishlistBadge">0</span>
+                </a>
+                <a href="cart.html" class="feature-btn" id="cartHeaderBtn" aria-label="Shopping Cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                        <path d="M3 6h18"></path>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="badge" id="cartBadge">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="motorcycles-section">
+        <!-- Brand Navigation -->
+        <nav class="range-nav" id="rangeNav">
+            <div class="range-nav-inner">
+                <button class="brand-tab active" data-brand="MR. VIKING">MR. VIKING</button>
+                <button class="brand-tab" data-brand="HONDA">Honda</button>
+            </div>
+            
+            <!-- Category Chips -->
+            <div class="category-filters" id="categoryFilters">
+                <button class="filter-chip active" data-filter="ALL">All Models</button>
+                <!-- Dynamic subcategories injected by JS -->
+            </div>
+        </nav>
+
+        <div class="section-container">
+            <!-- Dynamic Grid -->
+            <div class="bikes-grid" id="bikesGrid">
+                <!-- Cards will be rendered here by RangeManager -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-overlay-close" id="searchClose">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </div>
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search by bike name..." autocomplete="off">
+                <div class="search-input-line"></div>
+            </div>
+            <div class="search-suggestions" id="searchSuggestions">
+                <!-- Suggestions injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/bikes.js?v=2"></script>
+    <script src="../js/features.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        class RangeManager {
+            constructor() {
+                const params = new URLSearchParams(window.location.search);
+                this.searchQuery = params.get('search');
+                this.isSearching = !!this.searchQuery;
+
+                this.currentBrand = 'MR. VIKING';
+                this.currentFilter = 'ALL';
+                this.grid = document.getElementById('bikesGrid');
+                this.brandTabs = document.querySelectorAll('.brand-tab');
+                this.filterContainer = document.getElementById('categoryFilters');
+                this.rangeNav = document.getElementById('rangeNav');
+                
+                this.init();
+            }
+
+            init() {
+                this.brandTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        this.switchBrand(tab.dataset.brand);
+                        this.brandTabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                    });
+                });
+
+                this.render();
+            }
+
+            switchBrand(brand) {
+                this.currentBrand = brand;
+                this.currentFilter = 'ALL';
+                this.updateFilters();
+                this.render();
+            }
+
+            updateFilters() {
+                // Get unique families for the current brand
+                const families = new Set();
+                Object.values(bikeData).forEach(bike => {
+                    if (bike.brand === this.currentBrand) {
+                        families.add(bike.family);
+                    }
+                });
+
+                this.filterContainer.innerHTML = `<button class="filter-chip active" data-filter="ALL">All Models</button>`;
+                families.forEach(family => {
+                    const btn = document.createElement('button');
+                    btn.className = 'filter-chip';
+                    btn.dataset.filter = family;
+                    btn.textContent = family;
+                    btn.addEventListener('click', () => {
+                        this.currentFilter = family;
+                        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.render();
+                    });
+                    this.filterContainer.appendChild(btn);
+                });
+
+                // Add listener to the initial "ALL" button
+                this.filterContainer.querySelector('[data-filter="ALL"]').addEventListener('click', (e) => {
+                    this.currentFilter = 'ALL';
+                    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                    e.target.classList.add('active');
+                    this.render();
+                });
+            }
+
+            async render() {
+                this.grid.style.opacity = '0';
+                
+                // Small delay for smooth transition
+                setTimeout(() => {
+                    this.grid.innerHTML = '';
+                    
+                    if (this.isSearching) {
+                        this.rangeNav.style.display = 'none';
+                        const query = this.searchQuery.toLowerCase();
+                        
+                        const filteredBikes = Object.values(bikeData).filter(bike => 
+                            bike.name.toLowerCase().includes(query) || 
+                            bike.family.toLowerCase().includes(query) ||
+                            bike.brand.toLowerCase().includes(query)
+                        );
+
+                        // Render Search Results Header
+                        const resultHeader = document.createElement('div');
+                        resultHeader.className = 'explore-results-header';
+                        resultHeader.innerHTML = `
+                            <h2 class="results-title">Search Results for: <span>"${this.searchQuery}"</span></h2>
+                            <button class="explore-more-btn" id="clearSearchBtn">Explore More</button>
+                        `;
+                        this.grid.appendChild(resultHeader);
+
+                        // Clear search event
+                        resultHeader.querySelector('#clearSearchBtn').addEventListener('click', () => {
+                            window.history.pushState({}, '', 'motorcycles.html');
+                            this.isSearching = false;
+                            this.searchQuery = null;
+                            this.rangeNav.style.display = 'block';
+                            this.render();
+                        });
+
+                        if (filteredBikes.length === 0) {
+                            const noResults = document.createElement('div');
+                            noResults.style.cssText = 'grid-column: 1/-1; text-align: center; padding: 100px 0; color: #666; font-size: 1.2rem;';
+                            noResults.textContent = 'No motorcycles found matching your search.';
+                            this.grid.appendChild(noResults);
+                        } else {
+                            filteredBikes.forEach((bike, index) => {
+                                const card = this.createCard(bike, index);
+                                this.grid.appendChild(card);
+                            });
+                        }
+                    } else {
+                        this.rangeNav.style.display = 'block';
+                        
+                        const sourceData = bikeData;
+                                            
+                        const filteredBikes = Object.values(sourceData).filter(bike => {
+                            const brandMatch = bike.brand === this.currentBrand;
+                            const filterMatch = this.currentFilter === 'ALL' || bike.family === this.currentFilter;
+                            return brandMatch && filterMatch;
+                        });
+
+                        filteredBikes.forEach((bike, index) => {
+                            const card = this.createCard(bike, index);
+                            this.grid.appendChild(card);
+                        });
+                    }
+
+                    this.grid.style.opacity = '1';
+                    
+                    // Re-init features for new elements
+                    if (window.featureManager) {
+                        window.featureManager.init();
+                        this.updateButtonStates();
+                    }
+                }, 300);
+            }
+
+            createCard(bike, index) {
+                const div = document.createElement('div');
+                div.className = 'vault-card';
+                div.style.animation = `slideIn 0.6s ease forwards ${index * 0.1}s`;
+                div.style.opacity = '0';
+
+                div.innerHTML = `
+                    <div class="vault-card-header">
+                        ${bike.brand === 'MR. VIKING' ? '<span class="vault-card-badge">CBU LUXURY</span>' : ''}
+                        <img src="${bike.thumbnail}" alt="${bike.name}" class="vault-card-img" onerror="this.src='../images/hero-motorcycle.png'">
+                        
+                        <div class="vault-actions">
+                            <button class="vault-action-btn action-btn-wish" data-action="wishlist" data-id="${bike.id}" title="Add to Wishlist">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                            </button>
+                            <button class="vault-action-btn action-btn-compare" data-action="compare" data-id="${bike.id}" title="Compare">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="vault-card-body">
+                        <h3 class="vault-card-name">${bike.name}</h3>
+                        <p class="vault-card-slogan">${bike.description}</p>
+                        
+                        <div class="vault-card-stats">
+                            <div class="vault-stat">
+                                <span class="vault-stat-val">${bike.stats.cylinders}</span>
+                                <span class="vault-stat-unit">Cyl</span>
+                            </div>
+                            <div class="vault-stat">
+                                <span class="vault-stat-val">${bike.stats.capacity.replace('cc', '')}</span>
+                                <span class="vault-stat-unit">cc</span>
+                            </div>
+                            <div class="vault-stat">
+                                <span class="vault-stat-val">${bike.stats.hp}</span>
+                                <span class="vault-stat-unit">HP</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="vault-card-footer">
+                        <div class="vault-card-price">
+                            <span class="vault-price-val" style="font-size: 1.2rem;">৳ ${bike.priceBDT}</span>
+                        </div>
+                        <button class="vault-action-btn active action-btn-cart" data-action="cart" data-id="${bike.id}" style="width: auto; padding: 0 15px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">
+                            ADD TO CART
+                        </button>
+                    </div>
+                `;
+
+                // Wrap entire card link to product page (except buttons)
+                div.addEventListener('click', (e) => {
+                    if (!e.target.closest('button')) {
+                        window.location.href = `product.html?model=${bike.id}`;
+                    }
+                });
+
+                return div;
+            }
+
+            updateButtonStates() {
+                if (!window.featureManager) return;
+                
+                const wishlist = window.featureManager.wishlist;
+                const cart = window.featureManager.cart;
+                
+                document.querySelectorAll('.action-btn-wish').forEach(btn => {
+                    if (wishlist.includes(btn.dataset.id)) btn.classList.add('active');
+                });
+                
+                document.querySelectorAll('.action-btn-cart').forEach(btn => {
+                    if (cart.includes(btn.dataset.id)) {
+                        btn.textContent = 'IN CART';
+                        btn.style.background = '#333';
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const range = new RangeManager();
+            // Trigger filter update for initial brand
+            range.updateFilters();
+
+            // Listen for dynamic products from DB and refresh
+            document.addEventListener('productsLoaded', () => {
+                range.updateFilters();
+            });
+        });
+    </script>
+    <script src="../js/cursor.js"></script>
+</body>
+</html>

@@ -1,0 +1,663 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MR. VIKING Superveloce - The most beautiful Italian motorcycle. Classic racing aesthetics meet modern technology.">
+    <title>MR. VIKING - Superveloce | Racing Motorcycles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="model-detail.css">
+    <link rel="icon" type="image/png" href="images/Mr. Viking.png">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">MR. VIKING</div>
+            <div class="preloader-bar">
+                <div class="preloader-bar-fill"></div>
+            </div>
+            <div class="preloader-text">Loading Experience...</div>
+        </div>
+    </div>
+
+
+
+    <!-- Header -->
+    <header class="header header-detail" id="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo" id="logo">
+                <img src="images/Mr. Viking.png" alt="MR. VIKING Logo" class="logo-img">
+                <span class="logo-text">MR. VIKING</span>
+            </a>
+            <nav class="main-nav" id="mainNav">
+                <ul class="nav-list">
+                    <li class="nav-item nav-item--has-mega" id="navMotorcycles">
+                        <a href="motorcycles.html" class="nav-link" data-text="Motorcycles">Motorcycles</a>
+                    </li>
+                    <li class="nav-item"><a href="index.html#heritage" class="nav-link" data-text="Heritage">Heritage</a></li>
+                    <li class="nav-item"><a href="index.html#innovation" class="nav-link" data-text="Innovation">Innovation</a></li>
+                    <li class="nav-item"><a href="index.html#racing" class="nav-link" data-text="Racing">Racing</a></li>
+                    <li class="nav-item"><a href="about-us.html" class="nav-link" data-text="About Us">About Us</a></li>
+                    <li class="nav-item"><a href="community.html" class="nav-link" data-text="Community">Community</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="index.html" class="back-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back</span>
+                </a>
+                
+                <!-- New Feature Icons -->
+                <a href="compare.html" class="feature-btn" id="compareBtn" aria-label="Compare">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+                    </svg>
+                    <span class="badge" id="compareBadge">0</span>
+                </a>
+                <a href="wishlist.html" class="feature-btn" id="wishlistHeaderBtn" aria-label="Wishlist">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span class="badge" id="wishlistBadge">0</span>
+                </a>
+                <a href="cart.html" class="feature-btn" id="cartHeaderBtn" aria-label="Shopping Cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                        <path d="M3 6h18"></path>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="badge" id="cartBadge">0</span>
+                </a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mega Menu - Motorcycles -->
+    <div class="mega-menu" id="megaMenu" role="dialog" aria-label="Motorcycles Menu">
+        <div class="mega-menu-inner" style="grid-template-columns: 240px 240px 1fr;">
+            <!-- Column 1: Families -->
+            <div class="mega-menu-left" id="megaFamilyList" style="background: #fdfdfd;">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Column 2: Variants -->
+            <div class="mega-menu-left" id="megaVariantList" style="background: #ffffff; border-right: 1px solid #eeeeee;">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Column 3: Preview -->
+            <div class="mega-menu-right" id="megaPreviewArea">
+                <div class="mega-preview-header">
+                    <span class="mega-variant-name" id="megaVariantName">Select a Model</span>
+                    <span class="mega-badge" id="megaBadge"></span>
+                </div>
+                <div class="mega-preview-image">
+                    <img src="images/hero_motorcycle_1775993542951.png" alt="Model Preview" id="megaPreviewImg">
+                </div>
+                <div class="mega-preview-footer">
+                    <span class="mega-model-title-large" id="megaModelTitle">MR. VIKING</span>
+                    <div class="mega-preview-specs">
+                        <div class="mega-spec-item">
+                            <span class="mega-spec-val" id="megaSpecCyl">-</span>
+                            <span class="mega-spec-label">Cylinders</span>
+                        </div>
+                        <div class="mega-spec-item">
+                            <span class="mega-spec-val" id="megaSpecCc">-<sup>cc</sup></span>
+                            <span class="mega-spec-label">Capacity</span>
+                        </div>
+                        <div class="mega-spec-item">
+                            <span class="mega-spec-val" id="megaSpecHp">-<sup>HP</sup></span>
+                            <span class="mega-spec-label">Horsepower</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="motorcycles.html" class="mega-explore-btn" id="megaExploreBtn" style="margin-top: 20px;">Explore Range &rarr;</a>
+            </div>
+        </div>
+    </div>
+    <div class="mega-menu-backdrop" id="megaMenuBackdrop"></div>
+
+    <!-- Fullscreen Menu -->
+    <div class="fullscreen-menu" id="fullscreenMenu">
+        <div class="fullscreen-menu-inner">
+            <ul class="fullscreen-nav-list">
+                <li class="fullscreen-nav-item"><a href="index.html#motorcycles" class="fullscreen-nav-link">Motorcycles</a></li>
+                <li class="fullscreen-nav-item"><a href="index.html#heritage" class="fullscreen-nav-link">Heritage</a></li>
+                <li class="fullscreen-nav-item"><a href="index.html#innovation" class="fullscreen-nav-link">Innovation</a></li>
+                <li class="fullscreen-nav-item"><a href="index.html#racing" class="fullscreen-nav-link">Racing</a></li>
+                <li class="fullscreen-nav-item"><a href="about-us.html" class="fullscreen-nav-link">About Us</a></li>
+                <li class="fullscreen-nav-item"><a href="community.html" class="fullscreen-nav-link">Community</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Model Hero -->
+    <section class="model-hero" id="modelHero">
+        <div class="model-hero-bg">
+            <div class="model-hero-gradient"></div>
+        </div>
+        <div class="model-hero-content">
+            <div class="model-hero-text">
+                <div class="model-hero-breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="breadcrumb-sep">/</span>
+                    <a href="index.html#motorcycles">Motorcycles</a>
+                    <span class="breadcrumb-sep">/</span>
+                    <span class="breadcrumb-current">Superveloce</span>
+                </div>
+                <h1 class="model-hero-title">
+                    <span class="model-hero-title-line">
+                        <span class="model-hero-word">Super</span>
+                    </span>
+                    <span class="model-hero-title-line">
+                        <span class="model-hero-word accent">veloce</span>
+                    </span>
+                </h1>
+                <p class="model-hero-tagline">Where timeless beauty meets cutting-edge performance</p>
+                <div class="model-hero-actions">
+                    <a href="#configure" class="btn btn-primary">
+                        <span class="btn-text">Configure Yours</span>
+                        <span class="btn-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="#specs" class="btn btn-outline">
+                        <span class="btn-text">View Specs</span>
+                    </a>
+                </div>
+            </div>
+            <div class="model-hero-image">
+                <img src="images/superveloce.png" alt="MR. VIKING Superveloce" id="modelHeroImg">
+            </div>
+        </div>
+        <div class="model-hero-specs-bar">
+            <div class="hero-spec-item">
+                <span class="hero-spec-value">3</span>
+                <span class="hero-spec-label">Cylinders</span>
+            </div>
+            <div class="hero-spec-divider"></div>
+            <div class="hero-spec-item">
+                <span class="hero-spec-value">798</span>
+                <span class="hero-spec-label">CC Capacity</span>
+            </div>
+            <div class="hero-spec-divider"></div>
+            <div class="hero-spec-item">
+                <span class="hero-spec-value">148</span>
+                <span class="hero-spec-label">Horsepower</span>
+            </div>
+            <div class="hero-spec-divider"></div>
+            <div class="hero-spec-item">
+                <span class="hero-spec-value">173</span>
+                <span class="hero-spec-label">Dry Weight (kg)</span>
+            </div>
+            <div class="hero-spec-divider"></div>
+            <div class="hero-spec-item">
+                <span class="hero-spec-value">13,100</span>
+                <span class="hero-spec-label">Max RPM</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Philosophy -->
+    <section class="design-section" id="design">
+        <div class="section-container">
+            <div class="design-grid">
+                <div class="design-text">
+                    <div class="section-label">
+                        <span class="label-line"></span>
+                        <span>Design Philosophy</span>
+                    </div>
+                    <h2 class="design-title">A Masterpiece of <br><em>Italian Artistry</em></h2>
+                    <p class="design-description">The Superveloce captures the spirit of the most beautiful MR. VIKING bikes of the past, incorporating all the modern technology that has made MR. VIKING legendary. Every curve, every line, every surface is designed to evoke emotion and deliver uncompromising performance.</p>
+                    <p class="design-description">The distinctive round headlight, the elegant tail section, and the hand-painted livery pay homage to the golden era of Grand Prix racing while housing state-of-the-art electronics and engineering.</p>
+                </div>
+                <div class="design-features">
+                    <div class="design-feature-card">
+                        <div class="feature-number">01</div>
+                        <h3 class="feature-title">Retro-Modern Design</h3>
+                        <p class="feature-text">Classic racing aesthetics reimagined with contemporary precision and Italian craftsmanship.</p>
+                    </div>
+                    <div class="design-feature-card">
+                        <div class="feature-number">02</div>
+                        <h3 class="feature-title">Handcrafted Details</h3>
+                        <p class="feature-text">Each motorcycle is individually assembled and hand-finished by master craftsmen in Schiranna.</p>
+                    </div>
+                    <div class="design-feature-card">
+                        <div class="feature-number">03</div>
+                        <h3 class="feature-title">Racing Heritage</h3>
+                        <p class="feature-text">Livery inspired by the championship-winning machines that defined an era of dominance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Width Image Showcase -->
+    <section class="showcase-section">
+        <div class="showcase-banner">
+            <div class="showcase-image-wrapper">
+                <img src="images/superveloce.png" alt="Superveloce Detail" class="showcase-img">
+            </div>
+            <div class="showcase-overlay">
+                <div class="showcase-text">
+                    <span class="showcase-label">Crafted in Italy</span>
+                    <h3 class="showcase-heading">Every Detail Matters</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Technical Specifications -->
+    <section class="specs-section" id="specs">
+        <div class="section-container">
+            <div class="section-header section-header-center">
+                <div class="section-label">
+                    <span class="label-line"></span>
+                    <span>Technical Data</span>
+                </div>
+                <h2 class="section-title">Specifications</h2>
+                <p class="section-subtitle">Complete technical details of the Superveloce S</p>
+            </div>
+
+            <div class="specs-tabs">
+                <button class="spec-tab active" data-tab="engine">Engine</button>
+                <button class="spec-tab" data-tab="chassis">Chassis</button>
+                <button class="spec-tab" data-tab="electronics">Electronics</button>
+                <button class="spec-tab" data-tab="dimensions">Dimensions</button>
+            </div>
+
+            <div class="specs-content">
+                <!-- Engine Tab -->
+                <div class="spec-panel active" id="panel-engine">
+                    <div class="spec-grid">
+                        <div class="spec-row">
+                            <span class="spec-name">Type</span>
+                            <span class="spec-val">3-cylinder, 4-stroke, 12 valve</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Timing System</span>
+                            <span class="spec-val">DOHC with chain</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Total Displacement</span>
+                            <span class="spec-val">798 cc</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Compression Ratio</span>
+                            <span class="spec-val">13.3:1</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Bore x Stroke</span>
+                            <span class="spec-val">79 mm x 54.3 mm</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Max Power</span>
+                            <span class="spec-val highlight">148 HP (108 kW) @ 13,000 rpm</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Max Torque</span>
+                            <span class="spec-val highlight">88 Nm @ 10,100 rpm</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Fuel System</span>
+                            <span class="spec-val">Integrated ignition-injection with Mikuni throttle body</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Exhaust</span>
+                            <span class="spec-val">3 into 1 with single exit</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chassis Tab -->
+                <div class="spec-panel" id="panel-chassis">
+                    <div class="spec-grid">
+                        <div class="spec-row">
+                            <span class="spec-name">Frame</span>
+                            <span class="spec-val">Tubular trellis ALS Steel</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Swingarm</span>
+                            <span class="spec-val">Single-sided aluminium alloy</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Front Suspension</span>
+                            <span class="spec-val">Marzocchi USD 43mm, fully adjustable</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Rear Suspension</span>
+                            <span class="spec-val">Sachs monoshock, fully adjustable</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Front Brake</span>
+                            <span class="spec-val">Double floating disc âŒ€ 320 mm, Brembo radial caliper</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Rear Brake</span>
+                            <span class="spec-val">Single disc âŒ€ 220 mm, Brembo caliper</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Front Wheel</span>
+                            <span class="spec-val">Aluminium alloy 3.50" x 17"</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Rear Wheel</span>
+                            <span class="spec-val">Aluminium alloy 5.50" x 17"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Electronics Tab -->
+                <div class="spec-panel" id="panel-electronics">
+                    <div class="spec-grid">
+                        <div class="spec-row">
+                            <span class="spec-name">Ride-by-Wire</span>
+                            <span class="spec-val">Continental full ride-by-wire</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Riding Modes</span>
+                            <span class="spec-val">4 (Sport, Race, Rain, Custom)</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Traction Control</span>
+                            <span class="spec-val">8-level MV EAS 3.0</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">ABS</span>
+                            <span class="spec-val">Continental MK100 with cornering function</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Quick Shifter</span>
+                            <span class="spec-val">MV EAS 3.0 up & down</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Dashboard</span>
+                            <span class="spec-val">5.5" TFT color display</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Launch Control</span>
+                            <span class="spec-val">Yes</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Cruise Control</span>
+                            <span class="spec-val">Electronic</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dimensions Tab -->
+                <div class="spec-panel" id="panel-dimensions">
+                    <div class="spec-grid">
+                        <div class="spec-row">
+                            <span class="spec-name">Wheelbase</span>
+                            <span class="spec-val">1,380 mm</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Seat Height</span>
+                            <span class="spec-val">830 mm</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Overall Length</span>
+                            <span class="spec-val">2,017 mm</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Overall Width</span>
+                            <span class="spec-val">750 mm</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Dry Weight</span>
+                            <span class="spec-val highlight">173 kg</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Fuel Tank Capacity</span>
+                            <span class="spec-val">16.5 L</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Trail</span>
+                            <span class="spec-val">100.5 mm</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-name">Rake</span>
+                            <span class="spec-val">25Â°</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Color Configurator -->
+    <section class="configurator-section" id="configure">
+        <div class="section-container">
+            <div class="section-header section-header-center">
+                <div class="section-label">
+                    <span class="label-line"></span>
+                    <span>Personalize</span>
+                </div>
+                <h2 class="section-title">Choose Your Color</h2>
+                <p class="section-subtitle">Select from our exclusive color palette to make it uniquely yours</p>
+            </div>
+            <div class="configurator-wrapper">
+                <div class="configurator-display">
+                    <div class="config-motorcycle-img">
+                        <img src="images/superveloce.png" alt="Superveloce Configuration" id="configImage">
+                    </div>
+                    <div class="config-price-tag">
+                        <span class="config-price-label">Starting from</span>
+                        <span class="config-price">â‚¬ 21,990</span>
+                    </div>
+                </div>
+                <div class="color-options">
+                    <button class="color-option active" data-color="Ago Red/Silver" style="--swatch-color: linear-gradient(135deg, #c8102e 50%, #c0c0c0 50%)">
+                        <span class="color-swatch"></span>
+                        <span class="color-name">Ago Red/Silver</span>
+                    </button>
+                    <button class="color-option" data-color="Pearl White/Red" style="--swatch-color: linear-gradient(135deg, #f5f5f0 50%, #c8102e 50%)">
+                        <span class="color-swatch"></span>
+                        <span class="color-name">Pearl White/Red</span>
+                    </button>
+                    <button class="color-option" data-color="Matt Black/Gold" style="--swatch-color: linear-gradient(135deg, #1a1a1a 50%, #c9a94e 50%)">
+                        <span class="color-swatch"></span>
+                        <span class="color-name">Matt Black/Gold</span>
+                    </button>
+                    <button class="color-option" data-color="Racing Blue/White" style="--swatch-color: linear-gradient(135deg, #1a3a6a 50%, #ffffff 50%)">
+                        <span class="color-swatch"></span>
+                        <span class="color-name">Racing Blue/White</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Models -->
+    <section class="related-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-label">
+                    <span class="label-line"></span>
+                    <span>Explore More</span>
+                </div>
+                <h2 class="section-title">Other Models</h2>
+            </div>
+            <div class="related-grid">
+                <div class="related-card">
+                    <div class="related-card-image">
+                        <img src="images/brutale.png" alt="MR. VIKING Brutale" loading="lazy">
+                    </div>
+                    <div class="related-card-info">
+                        <h3>Brutale 1000 RR</h3>
+                        <div class="related-specs">
+                            <span>4 Cyl</span><span>998 CC</span><span>208 HP</span>
+                        </div>
+                        <a href="#" class="model-link">
+                            <span>Discover</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="related-card">
+                    <div class="related-card-image">
+                        <img src="images/f3.png" alt="MR. VIKING F3" loading="lazy">
+                    </div>
+                    <div class="related-card-info">
+                        <h3>F3 RR</h3>
+                        <div class="related-specs">
+                            <span>3 Cyl</span><span>798 CC</span><span>147 HP</span>
+                        </div>
+                        <a href="#" class="model-link">
+                            <span>Discover</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="related-card">
+                    <div class="related-card-image">
+                        <img src="images/dragster.png" alt="MR. VIKING Dragster" loading="lazy">
+                    </div>
+                    <div class="related-card-info">
+                        <h3>Dragster RR</h3>
+                        <div class="related-specs">
+                            <span>3 Cyl</span><span>801 CC</span><span>140 HP</span>
+                        </div>
+                        <a href="#" class="model-link">
+                            <span>Discover</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="model-cta-section">
+        <div class="model-cta-bg"></div>
+        <div class="section-container">
+            <div class="model-cta-content">
+                <h2 class="model-cta-title">Ready to Ride?</h2>
+                <p class="model-cta-text">Find your nearest dealer and book a test ride of the Superveloce today.</p>
+                <div class="model-cta-actions">
+                    <a href="#" class="btn btn-primary">
+                        <span class="btn-text">Find a Dealer</span>
+                        <span class="btn-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <span class="btn-text">Book Test Ride</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-top">
+            <div class="section-container">
+                <div class="footer-grid">
+                    <div class="footer-col footer-brand">
+                        <a href="index.html" class="footer-logo">MR. VIKING</a>
+                        <p class="footer-brand-text">Crafting motorcycle art since 1945. Each motorcycle is handcrafted and assembled by expert and passionate technicians in our factory in Schiranna, Varese, Italy.</p>
+                        <div class="footer-social">
+                            <a href="#" class="footer-social-link" aria-label="Instagram">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                    <circle cx="12" cy="12" r="5"/>
+                                    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="footer-social-link" aria-label="Facebook">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="footer-social-link" aria-label="YouTube">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/>
+                                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4 class="footer-col-title">Motorcycles</h4>
+                        <ul class="footer-links">
+                            <li><a href="motorcycles.html">Rush</a></li>
+                            <li><a href="motorcycles.html">Brutale</a></li>
+                            <li><a href="motorcycles.html">Dragster</a></li>
+                            <li><a href="model-detail.html">Superveloce</a></li>
+                            <li><a href="motorcycles.html">F3</a></li>
+                            <li><a href="motorcycles.html">Turismo Veloce</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4 class="footer-col-title">Company</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Heritage</a></li>
+                            <li><a href="#">Innovation</a></li>
+                            <li><a href="#">Racing</a></li>
+                            <li><a href="#">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4 class="footer-col-title">Support</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Find a Dealer</a></li>
+                            <li><a href="#">Owner's Area</a></li>
+                            <li><a href="#">Service</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="section-container">
+                <div class="footer-bottom-inner">
+                    <p class="footer-copyright">&copy; 2024 MR. VIKING Motor S.p.A. All rights reserved.</p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Cookie Policy</a>
+                        <a href="#">Terms & Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="bikes.js"></script>
+    <script src="features.js"></script>
+    <script src="script.js"></script>
+    <script src="model-detail.js"></script>
+    <script src="cursor.js"></script>
+</body>
+</html>

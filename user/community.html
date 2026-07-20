@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Community - MR. VIKING</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/community.css">
+    <link rel="stylesheet" href="../css/mega-menu.css">
+    <link rel="icon" type="image/png" href="../images/Mr. Viking.png">
+</head>
+<body class="community-page">
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">MR. VIKING</div>
+            <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+            <div class="preloader-text">Loading Community...</div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Header -->
+    <header class="header scrolled" id="header">
+        <div class="header-inner">
+            <a href="../index.php" class="logo">
+                <img src="../images/Mr. Viking.png" alt="MR. VIKING Logo" class="logo-img">
+                <span class="logo-text">MR. VIKING</span>
+            </a>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="motorcycles.html" class="nav-link">Motorcycles</a></li>
+                    <li class="nav-item"><a href="about-us.html" class="nav-link">About Us</a></li>
+                    <li class="nav-item"><a href="community.html" class="nav-link active">Community</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="login-btn" id="loginBtn">Login</button>
+                <div id="userStatus" style="display:none;">
+                    <div id="userAvatarCircle" class="avatar-sm"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="community-main">
+        <div class="community-container">
+            <!-- Sidebar Left: Filters & Profile Summary -->
+            <aside class="community-sidebar left">
+                <div class="sidebar-box profile-summary" id="profileSummary">
+                    <div class="profile-bg"></div>
+                    <div class="profile-info-mini">
+                        <div class="avatar-lg" id="sidebarAvatar">?</div>
+                        <h4 id="sidebarName">Guest User</h4>
+                        <p id="sidebarRole">Revolutionary Rider</p>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item"><span>0</span><label>Posts</label></div>
+                        <div class="stat-item"><span>0</span><label>Reactions</label></div>
+                    </div>
+                </div>
+
+                <div class="sidebar-box filters-box">
+                    <h3>Explore</h3>
+                    <ul class="filter-list">
+                        <li class="active" data-filter="All">All Posts</li>
+                        <li data-filter="News">Official News</li>
+                        <li data-filter="Review">Bike Reviews</li>
+                        <li data-filter="User Post">User Stories</li>
+                        <li data-filter="Ratings">Top Ratings</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main Content: Feed -->
+            <section class="community-feed">
+                <div class="feed-header">
+                    <h1>Bike <em>Community</em></h1>
+                    <div class="feed-search">
+                        <input type="text" placeholder="Search community..." id="communitySearch">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </div>
+                </div>
+
+                <!-- Create Post Section -->
+                <div class="create-post-card" id="createPostBox">
+                    <div class="create-post-top">
+                        <div class="avatar-sm" id="createPostAvatar">?</div>
+                        <button class="trigger-input" id="openPostModal">Share something about bikes...</button>
+                    </div>
+                    <div class="create-post-actions">
+                        <button class="post-action-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Photo</button>
+                        <button class="post-action-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> Video</button>
+                        <button class="post-action-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Review</button>
+                    </div>
+                </div>
+
+                <!-- Feed Container -->
+                <div class="feed-posts" id="feedPosts">
+                    <!-- Posts will be injected here -->
+                    <div class="loading-shimmer">
+                        <div class="shimmer-card"></div>
+                        <div class="shimmer-card"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sidebar Right: Trending & Top Bikes -->
+            <aside class="community-sidebar right">
+                <div class="sidebar-box trending-box">
+                    <h3>Trending <em>Now</em></h3>
+                    <div class="trending-list" id="trendingList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="sidebar-box top-bikes-box">
+                    <h3>Top Rated <em>Bikes</em></h3>
+                    <div class="top-bikes-list" id="topBikesList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Post Modal -->
+    <div class="modal-overlay" id="postModal">
+        <div class="post-modal-container">
+            <div class="modal-header">
+                <h2>Create Post</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="createPostForm" enctype="multipart/form-data">
+                <div class="post-user-info">
+                    <div class="avatar-sm" id="modalUserAvatar">?</div>
+                    <div>
+                        <span class="user-name" id="modalUserName">Guest Rider</span>
+                        <select name="type" id="postTypeSelect">
+                            <option value="User Post">Public Post</option>
+                            <option value="Review">Bike Review</option>
+                            <?php if(isAdmin()): ?><option value="News">Official News</option><?php endif; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <textarea name="content" placeholder="What's on your mind?" required></textarea>
+
+                <div id="reviewFields" style="display:none; margin: 15px 0;">
+                    <div class="form-group">
+                        <label>Select Bike Model</label>
+                        <select name="bike_id" id="bikeSelect">
+                            <option value="">Select a bike...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="star-rating">
+                            <input type="radio" name="rating" value="5" id="s5"><label for="s5">★</label>
+                            <input type="radio" name="rating" value="4" id="s4"><label for="s4">★</label>
+                            <input type="radio" name="rating" value="3" id="s3"><label for="s3">★</label>
+                            <input type="radio" name="rating" value="2" id="s2"><label for="s2">★</label>
+                            <input type="radio" name="rating" value="1" id="s1"><label for="s1">★</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-preview" id="filePreview"></div>
+
+                <div class="modal-footer">
+                    <div class="footer-actions">
+                        <label class="add-media-btn">
+                            <input type="file" name="media" accept="image/*,video/*" hidden id="mediaInput">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Add Photo/Video
+                        </label>
+                    </div>
+                    <button type="submit" class="submit-post-btn">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">Link copied!</div>
+
+    <script src="../js/bikes.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/community.js"></script>
+    <script src="../js/cursor.js"></script>
+</body>
+</html>

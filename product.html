@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motorcycle Detail - MR. VIKING</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .product-content { background: #ffffff; color: #111111; }
+        .product-nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; transition: all 0.3s ease; }
+        .product-nav.scrolled { background: #ffffff; border-bottom: 1px solid #eeeeee; }
+        .model-breadcrumb { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #888888; margin-bottom: 20px; }
+        .story-section { padding: 120px 0; overflow: hidden; }
+        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .story-image img { width: 100%; border-radius: 4px; box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
+        .story-title { font-size: 3.5rem; font-weight: 900; line-height: 1; margin-bottom: 30px; text-transform: uppercase; }
+        .story-text { font-size: 1.1rem; line-height: 1.6; color: #444444; }
+        .spec-trigger-bar { 
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+            background: #111111; color: #ffffff; padding: 20px 40px;
+            display: flex; gap: 40px; border-radius: 100px; z-index: 100;
+            cursor: pointer; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        .spec-trigger-bar:hover { transform: translateX(-50%) translateY(-5px); }
+    </style>
+</head>
+<body class="product-content">
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor">
+        <div class="cursor-logo" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 0.6rem; font-weight: 900; letter-spacing: 0.1em;">MV</div>
+    </div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+    
+    <!-- Navigation -->
+    <header class="header white-theme product-nav" id="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><span class="logo-text">MR. VIKING</span></a>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="motorcycles.html" class="nav-link">Range</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="navModelName">MODEL</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-header-btn" id="searchHeaderBtn" aria-label="Search" style="color: #111; border-color: rgba(0,0,0,0.1);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <span class="search-btn-text">Search</span>
+                </button>
+                <a href="compare.html" class="feature-btn" id="compareBtn" aria-label="Compare" style="color: #111;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+                    </svg>
+                    <span class="badge" id="compareBadge">0</span>
+                </a>
+                <a href="wishlist.html" class="feature-btn" id="wishlistHeaderBtn" aria-label="Wishlist" style="color: #111;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span class="badge" id="wishlistBadge">0</span>
+                </a>
+                <a href="cart.html" class="feature-btn" id="cartHeaderBtn" aria-label="Shopping Cart" style="color: #111;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                        <path d="M3 6h18"></path>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="badge" id="cartBadge">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Hotspots -->
+    <section class="product-hero">
+        <div class="product-hotspot-container" id="hotspotLayer">
+            <!-- Populated by JS -->
+        </div>
+        
+        <div class="section-container" style="text-align: center; border-bottom: 1px solid #eeeeee; padding-bottom: 100px;">
+            <div class="model-breadcrumb">Motorcycles / <span id="breadFamily">Family</span> / <span id="breadVariant" style="color: #111111;">Variant</span></div>
+            <h1 id="heroSlogan" style="font-size: 8rem; font-weight: 900; text-transform: uppercase; line-height: 0.8; margin-bottom: 40px;">THE BEAUTY OF SPEED</h1>
+            <div style="max-width: 1000px; margin: 0 auto; position: relative;">
+                <img src="" alt="Main Bike" id="heroBikeImg" style="width: 100%; filter: drop-shadow(0 40px 80px rgba(0,0,0,0.1));">
+            </div>
+            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 40px;" id="commButtonsContainer">
+                <!-- Communication buttons generated via JS to dynamically include bike name -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Storytelling Sections -->
+    <div id="storyContainer">
+        <!-- Populated by JS -->
+    </div>
+
+    <!-- Floating Spec Bar -->
+    <div class="spec-trigger-bar" id="specTrigger">
+        <div class="mega-spec-item" style="color: #ffffff;">
+            <span class="mega-spec-val" id="barCyl" style="color: #ffffff;">4</span>
+            <span class="mega-spec-label">Cylinders</span>
+        </div>
+        <div class="mega-spec-item">
+            <span class="mega-spec-val" id="barCc" style="color: #ffffff;">998</span>
+            <span class="mega-spec-label">Capacity</span>
+        </div>
+        <div class="mega-spec-item">
+            <span class="mega-spec-val" id="barHp" style="color: #ffffff;">208</span>
+            <span class="mega-spec-label">Horsepower</span>
+        </div>
+        <div style="display: flex; align-items: center; border-left: 1px solid #333; padding-left: 40px;">
+            <span style="font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;">Technical Data &rarr;</span>
+        </div>
+    </div>
+
+    <!-- Tech Spec Modal -->
+    <div class="spec-modal" id="specModal">
+        <button class="spec-modal-close" id="specClose">Close</button>
+        <aside class="spec-modal-sidebar">
+            <ul class="spec-modal-nav">
+                <li class="spec-modal-nav-item active" data-cat="engine">Engine</li>
+                <li class="spec-modal-nav-item" data-cat="chassis">Chassis</li>
+                <li class="spec-modal-nav-item" data-cat="electronics">Electronics</li>
+            </ul>
+        </aside>
+        <main class="spec-modal-content">
+            <div class="spec-grid" id="specGrid">
+                <!-- Populated by JS -->
+            </div>
+        </main>
+    </div>
+
+    <script src="bikes.js"></script>
+    <script src="features.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function populateBikePage(bike) {
+            if (!bike) {
+                window.location.href = 'motorcycles.html';
+                return;
+            }
+
+            // Populate Text
+            document.title = `${bike.name} - MR. VIKING`;
+            document.getElementById('navModelName').textContent = bike.name;
+            document.getElementById('breadFamily').textContent = bike.family;
+            document.getElementById('breadVariant').textContent = bike.variant || bike.name;
+            document.getElementById('heroSlogan').textContent = bike.slogan;
+            document.getElementById('heroBikeImg').src = bike.heroImage;
+            
+            document.getElementById('barCyl').textContent = bike.stats.cylinders;
+            document.getElementById('barCc').innerHTML = `${bike.stats.capacity}<sup>cc</sup>`;
+            document.getElementById('barHp').innerHTML = `${bike.stats.hp}<sup>HP</sup>`;
+
+            // Render Communication Buttons
+            const commContainer = document.getElementById('commButtonsContainer');
+            const waNumber = '+8801900000000'; // Default phone
+            const waText = encodeURIComponent(`I am interested in this bike: ${bike.name}`);
+            const fbPage = 'MrVikingMCOfficial';
+
+            commContainer.innerHTML = `
+                <a href="https://wa.me/${waNumber}?text=${waText}" target="_blank" style="padding: 15px 30px; background: #25D366; color: white; border-radius: 4px; font-weight: 800; text-decoration: none; text-transform: uppercase;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Chat on WhatsApp
+                </a>
+                <a href="https://m.me/${fbPage}" target="_blank" style="padding: 15px 30px; background: #0084FF; color: white; border-radius: 4px; font-weight: 800; text-decoration: none; text-transform: uppercase;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Messenger
+                </a>
+                <a href="tel:${waNumber}" style="padding: 15px 30px; background: #111; color: white; border-radius: 4px; font-weight: 800; text-decoration: none; text-transform: uppercase;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Call Now
+                </a>
+            `;
+
+            // Render Hotspots
+            const hotspotLayer = document.getElementById('hotspotLayer');
+            bike.hotspots.forEach(hs => {
+                const dot = document.createElement('div');
+                dot.className = 'hotspot';
+                dot.style.left = hs.x + '%';
+                dot.style.top = hs.y + '%';
+                dot.innerHTML = `
+                    <div class="hotspot-pulse"></div>
+                    <div class="hotspot-tooltip">
+                        <span class="hotspot-tooltip-title">${hs.title}</span>
+                        <p class="hotspot-tooltip-text">${hs.text}</p>
+                    </div>
+                `;
+                hotspotLayer.appendChild(dot);
+            });
+
+            // Render Story
+            const storyContainer = document.getElementById('storyContainer');
+            bike.story.forEach((part, index) => {
+                const section = document.createElement('section');
+                section.className = 'story-section';
+                section.style.padding = '0';
+                section.style.display = 'flex';
+                section.style.flexWrap = 'wrap';
+                section.style.backgroundColor = index % 2 === 0 ? '#111' : '#fff';
+                section.style.color = index % 2 === 0 ? '#fff' : '#111';
+                
+                const textSide = `
+                    <div style="flex: 1; min-width: 300px; padding: 120px 5vw; display: flex; flex-direction: column; justify-content: center;">
+                        <h2 class="story-title" style="font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 20px;">${part.title}</h2>
+                        <p class="story-text" style="color: ${index % 2 === 0 ? '#ccc' : '#444'}; max-width: 600px; font-size: 1.1rem; line-height: 1.8;">${part.text}</p>
+                    </div>
+                `;
+                const imageSide = `
+                    <div style="flex: 1; min-width: 300px; display: flex;">
+                        <img src="${part.image}" alt="${part.title}" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 16/9; display: block;">
+                    </div>
+                `;
+
+                section.innerHTML = index % 2 === 0 ? textSide + imageSide : imageSide + textSide;
+                storyContainer.appendChild(section);
+            });
+
+            // Spec Modal Logic
+            const specModal = document.getElementById('specModal');
+            const specGrid = document.getElementById('specGrid');
+            const specTrigger = document.getElementById('specTrigger');
+            const specClose = document.getElementById('specClose');
+
+            specTrigger.addEventListener('click', () => {
+                renderSpecs('engine');
+                specModal.classList.add('active');
+            });
+
+            specClose.addEventListener('click', () => specModal.classList.remove('active'));
+
+            function renderSpecs(category) {
+                specGrid.innerHTML = '';
+                const items = bike.specs[category] || [];
+                items.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'spec-row';
+                    row.innerHTML = `
+                        <span class="spec-modal-label">${item.label}</span>
+                        <span class="spec-modal-value">${item.value}</span>
+                    `;
+                    specGrid.appendChild(row);
+                });
+            }
+
+            document.querySelectorAll('.spec-modal-nav-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.spec-modal-nav-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    renderSpecs(item.dataset.cat);
+                });
+            });
+
+            // Scroll Effect for Nav
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    document.getElementById('header').classList.add('scrolled');
+                } else {
+                    document.getElementById('header').classList.remove('scrolled');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const modelId = params.get('model') || 'f3-rr';
+
+            // 1. Try static bikeData first (always available instantly)
+            if (typeof bikeData !== 'undefined' && bikeData[modelId]) {
+                populateBikePage(bikeData[modelId]);
+            } else {
+                // 2. Not in static data - wait for DB products to load
+                document.addEventListener('productsLoaded', (e) => {
+                    const dbBike = e.detail[modelId];
+                    populateBikePage(dbBike || null);
+                });
+            }
+        });
+    </script>
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-overlay-close" id="searchClose">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </div>
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search by bike name..." autocomplete="off">
+                <div class="search-input-line"></div>
+            </div>
+            <div class="search-suggestions" id="searchSuggestions">
+                <!-- Suggestions injected here -->
+            </div>
+        </div>
+    </div>
+    <script src="cursor.js"></script>
+</body>
+</html>
